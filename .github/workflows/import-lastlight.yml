@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Verify and unpack complete game
+      - name: Verify and extract game excluding restricted workflow paths
         shell: bash
         run: |
           set -euo pipefail
@@ -35,26 +35,33 @@ jobs:
           done
           echo "d3d460065fe1e5add13e5e706c0e9af056c1d7033703dde037c8f7371ceb2936  $archive" | sha256sum --check
           python3 - "$archive" <<'PY'
-          import pathlib, sys, zipfile
-          archive = sys.argv[1]
-          with zipfile.ZipFile(archive) as zipped:
+          import pathlib, shutil, sys, zipfile
+          with zipfile.ZipFile(sys.argv[1]) as zipped:
               infos = zipped.infolist()
               if len(infos) != 1568:
-                  raise SystemExit(f"Expected 1568 game files; found {len(infos)}")
+                  raise SystemExit(f"Expected 1568 files, got {len(infos)}")
               for info in infos:
                   path = pathlib.PurePosixPath(info.filename)
                   if path.is_absolute() or ".." in path.parts or path.parts[0] == ".git":
                       raise SystemExit(f"Unsafe archive path: {info.filename}")
                   if (info.external_attr >> 16 & 0o170000) == 0o120000:
                       raise SystemExit(f"Symlink not allowed: {info.filename}")
-              zipped.extractall(".")
+              for info in infos:
+                  path = pathlib.PurePosixPath(info.filename)
+                  if path.parts[:2] == (".github", "workflows"):
+                      if info.is_dir():
+                          continue
+                      dest = pathlib.Path(".github/import-original-workflows").joinpath(*path.parts[2:])
+                      dest.parent.mkdir(parents=True, exist_ok=True)
+                      with zipped.open(info) as source, dest.open("wb") as target:
+                          shutil.copyfileobj(source, target)
+                  else:
+                      zipped.extract(info, ".")
           if not pathlib.Path("project.godot").exists() or not pathlib.Path("main.tscn").exists():
-              raise SystemExit("Missing Godot project files")
-          print("Verified Godot game imported")
+              raise SystemExit("Missing Godot project")
+          print("Verified complete game; original workflows preserved in staging")
           PY
-          rm -rf .github/import-parts
-          rm -f .github/workflows/import-lastlight.yml
-      - name: Commit complete imported game to the branch
+      - name: Commit extracted game without changing workflow paths
         shell: bash
         run: |
           set -euo pipefail
@@ -65,6 +72,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Nothing to import"
           else
-            git commit -m "Import complete Last Light Godot game (1568 files)"
+            git commit -m "Import Last Light Godot game and stage original workflows"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
