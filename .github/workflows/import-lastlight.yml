@@ -1,0 +1,70 @@
+name: Import Last Light game from verified archive
+
+on:
+  push:
+    branches:
+      - import/lastlight-game-20261123
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out import branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Verify and unpack complete game
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          parts=(.github/import-parts/part*.b64)
+          if [ "${#parts[@]}" -ne 74 ]; then
+            echo "Expected 74 archive sections, found ${#parts[@]}" >&2
+            exit 1
+          fi
+          archive="$RUNNER_TEMP/lastlight-game.zip"
+          : > "$archive"
+          for part in "${parts[@]}"; do
+            base64 --decode "$part" >> "$archive"
+          done
+          echo "d3d460065fe1e5add13e5e706c0e9af056c1d7033703dde037c8f7371ceb2936  $archive" | sha256sum --check
+          python3 - "$archive" <<'PY'
+          import pathlib, sys, zipfile
+          archive = sys.argv[1]
+          with zipfile.ZipFile(archive) as zipped:
+              infos = zipped.infolist()
+              if len(infos) != 1568:
+                  raise SystemExit(f"Expected 1568 game files; found {len(infos)}")
+              for info in infos:
+                  path = pathlib.PurePosixPath(info.filename)
+                  if path.is_absolute() or ".." in path.parts or path.parts[0] == ".git":
+                      raise SystemExit(f"Unsafe archive path: {info.filename}")
+                  if (info.external_attr >> 16 & 0o170000) == 0o120000:
+                      raise SystemExit(f"Symlink not allowed: {info.filename}")
+              zipped.extractall(".")
+          if not pathlib.Path("project.godot").exists() or not pathlib.Path("main.tscn").exists():
+              raise SystemExit("Missing Godot project files")
+          print("Verified Godot game imported")
+          PY
+          rm -rf .github/import-parts
+          rm -f .github/workflows/import-lastlight.yml
+      - name: Commit complete imported game to the branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --stat
+          if git diff --cached --quiet; then
+            echo "Nothing to import"
+          else
+            git commit -m "Import complete Last Light Godot game (1568 files)"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
