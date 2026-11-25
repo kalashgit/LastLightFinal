@@ -26,4 +26,4 @@ jobs:
           unzip -q godot.zip -d "$RUNNER_TEMP/godot"
           echo "GODOT=$RUNNER_TEMP/godot/Godot_v${{ matrix.godot }}-stable_linux.x86_64" >> "$GITHUB_ENV"
       - name: Run tests
-        run: tools/godot/run_tests.sh
+        run: bash tools/godot/run_tests.sh
