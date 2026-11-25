@@ -17,3 +17,6 @@ Architecture: separate game state, save data, movement/combat logic, inventory, 
 Every version checkpoint report: commit SHA, files changed, runnable entry scene, tests performed (exact commands/results), screenshots if possible, unresolved issues, changed UX, next version prerequisites.
 
 When a test fails, fix it before moving on. Never fabricate success.
+
+## Mechanics design library
+For gameplay mechanics tasks, read `docs/mechanics/README.md` and `docs/mechanics/IMPLEMENTATION.md` before editing. Use the relevant original Markdown references in `docs/mechanics/source/` as design inputs. These are concise summaries, not proof of implemented features. Follow the existing version sequence and testing/branch rules above; flag incomplete or conflicting requirements rather than silently guessing.
