@@ -4,9 +4,11 @@
   "total": 512,
   "completed": [
     "ll_generated_industrial_locker_000",
-    "ll_generated_tool_chest_000"
+    "ll_generated_tool_chest_000",
+    "ll_generated_warehouse_shelf_000",
+    "ll_generated_utility_cabinet_000"
   ],
-  "remaining": 510,
-  "last_approved_source_bundle_tag": "foundry-created-45151293426",
+  "remaining": 508,
+  "last_approved_source_bundle_tag": "foundry-created-45532260157",
   "golden_approved": false
 }
