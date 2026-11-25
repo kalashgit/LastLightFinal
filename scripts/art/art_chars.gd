@@ -46,9 +46,24 @@ static func queue_jobs(jobs: Array[Callable]) -> void:
 
 static func _load_rendered(anim: String, man: Dictionary) -> void:
 	var path: String = RENDERED + anim + ".png"
-	if not ResourceLoader.exists(path):
+	# On iPhone, decode one original PNG directly on the CPU when available.
+	# Uploading every large source sheet to the GPU just to read it back can
+	# exhaust memory during Xogot's first launch. Exported games may only have
+	# imported textures, so keep an uncached resource-loading fallback.
+	var sheet: Image = null
+	if FileAccess.file_exists(path):
+		sheet = Image.load_from_file(path)
+	if sheet == null or sheet.is_empty():
+		if ResourceLoader.exists(path):
+			var source := ResourceLoader.load(path, "Texture2D", ResourceLoader.CACHE_MODE_IGNORE) as Texture2D
+			if source != null:
+				sheet = source.get_image()
+	if sheet == null or sheet.is_empty():
+		push_warning("LAST LIGHT: missing animation sheet " + path + "; using procedural frames.")
+		if ANIMS.has(anim):
+			for d in range(5):
+				_gen_anim_dir(anim, d)
 		return
-	var sheet: Image = (load(path) as Texture2D).get_image()
 	sheet.convert(Image.FORMAT_RGBA8)
 	var cell: Array = man["cell"]
 	var anchor: Array = man["anchor"]
