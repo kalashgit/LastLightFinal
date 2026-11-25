@@ -57,8 +57,9 @@ func pack() -> void:
 	for i in range(images.size()):
 		var r: Rect2 = rects[i]
 		image.blit_rect(images[i], Rect2i(0, 0, int(r.size.x), int(r.size.y)), Vector2i(int(r.position.x), int(r.position.y)))
-	texture = ImageTexture.create_from_image(image)
+	# Release the temporary sprite buffers before allocating the GPU atlas.
 	images.clear()
+	texture = ImageTexture.create_from_image(image)
 
 func draw(ci: CanvasItem, hnd: int, pos: Vector2, mod: Color = Color.WHITE) -> void:
 	var r: Rect2 = rects[hnd]
