@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "catalog_sha256": "85acc503a47511b87480a6a3434f2eb99a49f86706e6cb24aa9f3b9b60785875",
+  "total": 512,
+  "completed_before": [
+    "ll_generated_industrial_locker_000",
+    "ll_generated_tool_chest_000",
+    "ll_generated_warehouse_shelf_000",
+    "ll_generated_utility_cabinet_000",
+    "ll_generated_portable_generator_000",
+    "ll_generated_vending_machine_000",
+    "ll_generated_street_dumpster_000",
+    "ll_generated_raised_planter_000"
+  ],
+  "batch_count": 2,
+  "batch": [
+    {
+      "asset_id": "ll_generated_industrial_locker_001",
+      "archetype": "industrial_locker",
+      "family": "F01",
+      "seed": 103286410,
+      "blend_sha256": "4581adec69e2f3d70373d51eb1e3c459e23322b28b80820b0baa690d71bf0fbe",
+      "glb_sha256": "32fa2483718e5c838f4cf325746f21b0bb91f9a70d46a58aece1b2f6264e5860",
+      "atlas_sha256": "0cfdc82815fd9a5390539e490eefa544681217be59f874653612d6740ce5b6e2",
+      "status": "UNAPPROVED_NEW_EDITABLE_3D_CANDIDATE"
+    },
+    {
+      "asset_id": "ll_generated_tool_chest_001",
+      "archetype": "tool_chest",
+      "family": "F01",
+      "seed": 816449332,
+      "blend_sha256": "8bcd3ebe6397742c68ef70071ef59689a45fb9bfb1c94e5c0051cb27c834a53b",
+      "glb_sha256": "8e97d7878ae676b5d71e24ed236c04ce4a176b5880a3add96f46da17e776a802",
+      "atlas_sha256": "db3730827f59a87612c126701265c5c6d418bbf836df48de6c90e78349f3f447",
+      "status": "UNAPPROVED_NEW_EDITABLE_3D_CANDIDATE"
+    }
+  ],
+  "archive_sha256": "e9012bad6554193971fa6850b32ff6ce6b843451546758270b016870e157ce2a",
+  "archive_size_bytes": 694652,
+  "source_editable": true,
+  "golden_approved": false,
+  "canonical_promoted": false,
+  "gameplay_integrated": false,
+  "release_tag": "foundry-created-45758496450",
+  "release_archive": "foundry_new_sources.zip",
+  "release_state": "DRAFT_DO_NOT_PUBLISH",
+  "run_id": "45758496450"
+}
