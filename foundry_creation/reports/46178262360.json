@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "catalog_sha256": "85acc503a47511b87480a6a3434f2eb99a49f86706e6cb24aa9f3b9b60785875",
+  "total": 512,
+  "completed_before": [
+    "ll_generated_industrial_locker_000",
+    "ll_generated_tool_chest_000",
+    "ll_generated_warehouse_shelf_000",
+    "ll_generated_utility_cabinet_000",
+    "ll_generated_portable_generator_000",
+    "ll_generated_vending_machine_000",
+    "ll_generated_street_dumpster_000",
+    "ll_generated_raised_planter_000",
+    "ll_generated_industrial_locker_001",
+    "ll_generated_tool_chest_001",
+    "ll_generated_warehouse_shelf_001",
+    "ll_generated_utility_cabinet_001",
+    "ll_generated_portable_generator_001",
+    "ll_generated_vending_machine_001",
+    "ll_generated_street_dumpster_001",
+    "ll_generated_raised_planter_001",
+    "ll_generated_industrial_locker_002",
+    "ll_generated_tool_chest_002",
+    "ll_generated_warehouse_shelf_002",
+    "ll_generated_utility_cabinet_002",
+    "ll_generated_portable_generator_002",
+    "ll_generated_vending_machine_002"
+  ],
+  "batch_count": 2,
+  "batch": [
+    {
+      "asset_id": "ll_generated_street_dumpster_002",
+      "archetype": "street_dumpster",
+      "family": "F08",
+      "seed": 802943722,
+      "blend_sha256": "b83644fe768f9ad264fe60fbc5a7326c97d3b4d4132ef834bc56dbd1854ab902",
+      "glb_sha256": "ac3a7b0426ae17e742390ca3e03cee7652fc68e67be5a9b5b2d91524c684816f",
+      "atlas_sha256": "791fb8f31b02c4afcd0bddf52c734d56681d61ec9bda252d415b577693d1b78c",
+      "status": "UNAPPROVED_NEW_EDITABLE_3D_CANDIDATE"
+    },
+    {
+      "asset_id": "ll_generated_raised_planter_002",
+      "archetype": "raised_planter",
+      "family": "F04",
+      "seed": 2945046210,
+      "blend_sha256": "060e47733e7b382079ab08ecc9d6d822b0cb54c2689088ce0b1180895a1ae9f6",
+      "glb_sha256": "d7e23b89e861b2ebba1835a5b206371980089d98d48da43c4ff7af30e3422858",
+      "atlas_sha256": "20c0210eb36f8161bcea01b48e6b83b5615c96abd895e2137d9f273778aa1394",
+      "status": "UNAPPROVED_NEW_EDITABLE_3D_CANDIDATE"
+    }
+  ],
+  "archive_sha256": "ea5c3a23cfb441a36f1fec376229d02fcb59bc83c356c06f95c0acf2f8645397",
+  "archive_size_bytes": 715645,
+  "source_editable": true,
+  "golden_approved": false,
+  "canonical_promoted": false,
+  "gameplay_integrated": false,
+  "release_tag": "foundry-created-46178262360",
+  "release_archive": "foundry_new_sources.zip",
+  "release_state": "DRAFT_DO_NOT_PUBLISH",
+  "run_id": "46178262360"
+}
